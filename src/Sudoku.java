@@ -8,7 +8,12 @@ public void scramble();
 /**
  * returns an array of the sudoku board
  */
-public int[] getArray();
+public int[][] getArray();
+
+/**
+ * sets the board with a given 9x9 int matrix 
+ */
+public void setArray(int[][] newBoard);
 
 /**
  * updates the value of the selected location
