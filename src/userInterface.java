@@ -22,7 +22,7 @@ public class userInterface {
             if (response == 1) {
                 break;
             } else {
-                
+
                 int x = form.readInt("x");
                 int y = form.readInt("y");
                 int newValue = form.readInt("newValue");
