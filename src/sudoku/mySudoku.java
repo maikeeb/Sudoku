@@ -7,8 +7,12 @@ public class mySudoku implements Sudoku {
     int[][] board;
 
     public mySudoku() {
-        board = new int[9][9];
-        scramble();
+        this(new int[9][9]);
+
+    }
+
+    public mySudoku(int[][] boardTemp) {
+        board = boardTemp;
     }
 
     /**
@@ -18,9 +22,7 @@ public class mySudoku implements Sudoku {
     public void scramble() {
         // TODO: make a solvable sudoku board
         for (int i = 0; i < 20; i++) {
-            
-
-            update(ran.nextInt(0, 8),ran.nextInt(0, 8), ran.nextInt(1, 9));
+            update(ran.nextInt(0, 8), ran.nextInt(0, 8), ran.nextInt(1, 9));
         }
     }
 
@@ -38,37 +40,10 @@ public class mySudoku implements Sudoku {
     @Override
     public void update(int x, int y, int newValue) {
 
-        // checks if possible location
-
-        // y:row check
-        for (int i = 0; i < board.length; i++) {
-            if (board[x][i] == newValue) {
-                return;
-            }
+        if (isAllowed(x, y, newValue)) {
+            board[x][y] = newValue;
         }
 
-        // x:column check
-        for (int i = 0; i < board.length; i++) {
-            if (board[i][y] == newValue) {
-                return;
-            }
-        }
-        // cell check
-
-        // gets the top left of the cell
-        int cellY = Math.floorDiv(y, 3);
-        int cellX = Math.floorDiv(x, 3);
-
-        for (int i = cellX * 3; i < cellX * 3 + 3; i++) {
-            for (int k = cellY * 3; k < cellY * 3 + 3; k++) {
-                if (board[i][k] == newValue) {
-                    return;
-                }
-
-            }
-        }
-
-        board[x][y] = newValue;
     }
 
     /**
@@ -78,6 +53,48 @@ public class mySudoku implements Sudoku {
     public void setArray(int[][] newBoard) {
         board = newBoard;
 
+    }
+
+    @Override
+    public boolean inColumn(int x, int value) {
+        for (int i = 0; i < board.length; i++) {
+            if (board[x][i] == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean inRow(int y, int value) {
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][y] == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean inCell(int x, int y, int value) {
+        int cellY = Math.floorDiv(y, 3);
+        int cellX = Math.floorDiv(x, 3);
+
+        for (int i = cellX * 3; i < cellX * 3 + 3; i++) {
+            for (int k = cellY * 3; k < cellY * 3 + 3; k++) {
+                if (board[i][k] == value) {
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isAllowed(int x, int y, int value) {
+
+        return !(inCell(x, y, value) || inRow(y, value) || inColumn(x, value));
     }
 
 }
