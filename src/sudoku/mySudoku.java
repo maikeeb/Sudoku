@@ -1,10 +1,13 @@
+package sudoku;
+
 import java.util.Random;
 
 public class mySudoku implements Sudoku {
-
-    int[][] board = new int[9][9];
+    Random ran = new Random();
+    int[][] board;
 
     public mySudoku() {
+        board = new int[9][9];
         scramble();
     }
 
@@ -13,7 +16,7 @@ public class mySudoku implements Sudoku {
      */
     @Override
     public void scramble() {
-        Random ran = new Random();
+
         // TODO: make a solvable sudoku board
         for (int i = 0; i < 20; i++) {
             board[ran.nextInt(0, 8)][ran.nextInt(0, 8)] = ran.nextInt(1, 9);

@@ -1,3 +1,4 @@
+package sudoku;
 public interface Sudoku {
 
 /**
